@@ -138,10 +138,8 @@ select {
     margin-top: var(--flow-space, 1rem);
 }
 
-.container {
-    padding-inline: 2em;
-    margin-inline: auto;
-    max-width: 80rem;
+.d-block {
+    display: block;
 }
 
 .sr-only {
@@ -232,11 +230,139 @@ select {
 /*     Game menu     */
 /* ----------------- */
 
+.gameMenu {
+    text-align: center;
+}
 
+.gameMenu img {
+    margin-inline: auto;
+    margin-bottom: 2rem;
+    margin-top: 7.5rem;
+}
 
+.choose-mark {
+    background-color: hsl( var(--clr-navy) );
+    margin-inline: auto;
+    margin-bottom: 2rem;
+    padding-inline: 1.5rem;
+    border-radius: 15px;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    max-width: 327px;
+    box-shadow: inset 0px -8px 0px #10212A;
+}
 
+.choose-mark h1 {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
 
+.mark-container {
+    width: 279px;
+    height: 72px;
+    background-color: hsl( var(--clr-darkNavy) );
+    border-radius: 10px;
+    gap: 132px;
+    margin-bottom: 1rem;
+}
 
+.labels {
+    display: block;
+    position: relative;
+    cursor: pointer; 
+}
+
+.labels input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    height: 54px;
+    width: 132px;
+    border-radius: 10px;
+    background-color: hsl( var(--clr-darkNavy) );
+}
+
+.labels:hover input ~ .checkmark {
+    background-color: hsla( var(--clr-silver) / 0.05) ;
+}
+
+.labels input:checked ~ .checkmark {
+    background-color: hsl( var(--clr-silver) );
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.labels input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.labels .checkmark:after {
+    width: 0;
+    height: 0;
+}
+
+.Xsvg, .Osvg {
+    transform: scale(.5);
+    position: relative;
+    bottom: 5px;
+}
+
+.labels input:checked ~ .checkmark path{
+    fill: hsl( var(--clr-darkNavy) );
+}
+
+.gameMenu p {
+    margin-bottom: 2rem;
+    opacity: .5;
+}
+
+.cpuBtn, .playerBtn {
+    margin-inline: auto;
+    width: 327px;
+    height: 56px;
+    border-radius: 15px;
+    border: none;
+    text-align: center;
+    font-weight: 700;
+    padding-bottom: 10px;
+}
+
+.cpuBtn:active, .playerBtn:active {
+    transform: translateY(2px);
+}
+
+.cpuBtn {
+    margin-bottom: 1rem;
+    background: hsl( var(--clr-orange) );
+    box-shadow: inset 0px -8px 0px #CC8B13;
+}
+
+.cpuBtn:hover {
+    background-color: hsl( var(--clr-orangeHover) );
+}
+
+.playerBtn {
+    background: hsl( var(--clr-lightBlue) );
+    box-shadow: inset 0px -8px 0px #118C87;
+}
+
+.playerBtn:hover {
+    background: hsl( var(--clr-lightBlueHover) );
+}
 
 /* ----------------- */
 /*     Game board    */

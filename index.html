@@ -19,40 +19,64 @@
 
         <section class="gameMenu">
 
-            Pick player 1's mark
-            Remember: X goes first
-            
-            New Game (vs CPU)
-            New Game (vs player)
-            
+            <img src="./assets/logo.svg" alt="logo">
+
+            <div class="choose-mark flex">
+                <h1 class="fs-600 uppercase">Pick player 1's mark</h1>
+                <div class="mark-container flex">
+                    <label class="labels" for="X-mark">
+                        <input  class="radio" type="radio" id="X-mark" name="marks" value="X" checked="true">
+                            <span class="checkmark">
+                                <svg class="Xsvg" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><path class="XsvgPath" d="M15.002 1.147 32 18.145 48.998 1.147a3 3 0 0 1 4.243 0l9.612 9.612a3 3 0 0 1 0 4.243L45.855 32l16.998 16.998a3 3 0 0 1 0 4.243l-9.612 9.612a3 3 0 0 1-4.243 0L32 45.855 15.002 62.853a3 3 0 0 1-4.243 0L1.147 53.24a3 3 0 0 1 0-4.243L18.145 32 1.147 15.002a3 3 0 0 1 0-4.243l9.612-9.612a3 3 0 0 1 4.243 0Z" fill="hsl( var(--clr-silver) )"/>
+                                </svg>
+                            </span>
+                    </label>
+
+                    <label class="labels" for="O-mark">
+                        <input class="radio" type="radio" id="O-mark" name="marks" value="O">
+                            <span class="checkmark">
+                                <svg class="Osvg" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><path class="OsvgPAth" d="M32 0c17.673 0 32 14.327 32 32 0 17.673-14.327 32-32 32C14.327 64 0 49.673 0 32 0 14.327 14.327 0 32 0Zm0 18.963c-7.2 0-13.037 5.837-13.037 13.037 0 7.2 5.837 13.037 13.037 13.037 7.2 0 13.037-5.837 13.037-13.037 0-7.2-5.837-13.037-13.037-13.037Z" fill="hsl( var(--clr-silver) )"/>
+                                </svg>
+                            </span>
+                        </label>
+
+
+                </div>
+                <p class="fs-500 uppercase text-silver">Remember: X goes first</p>
+
+            </div>
+
+            <button class="fs-700 text-dark uppercase d-block cpuBtn">New Game (vs CPU)</button>
+            <button class="fs-700 text-dark uppercase d-block playerBtn">New Game (vs player)</button>
+
         </section>
 
         <section class="gameBoard">
 
-        <!-- Game board start -->
+            <!-- Game board start -->
 
-        <!-- x/o icon --> turn
+            <!-- x/o icon --> turn
 
-        X (You)
-        <!-- Your score -->
-        Ties
-        <!-- Ties score -->
-        X (CPU)
-        <!-- CPU score -->
+            X (You)
+            <!-- Your score -->
+            Ties
+            <!-- Ties score -->
+            X (CPU)
+            <!-- CPU score -->
 
-        Oh no, you lost
-        You won!
-        Player
-        <!-- 1/2 --> wins!
+            Oh no, you lost
+            You won!
+            Player
+            <!-- 1/2 --> wins!
 
-        <!-- x/o icon --> takes the round
-        Round tied
-        Restart game?
+            <!-- x/o icon --> takes the round
+            Round tied
+            Restart game?
 
-        Quit
-        Next round
-        No, cancel
-        Yes, restart
+            Quit
+            Next round
+            No, cancel
+            Yes, restart
 
         </section>
 
