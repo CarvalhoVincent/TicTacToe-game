@@ -507,6 +507,9 @@ select {
 }
 
 .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #1F3641;
     box-shadow: inset 0px -8px 0px #10212A;
     border-radius: 10px;
@@ -520,6 +523,30 @@ select {
         height: 8.75rem;
         border-radius: 15px;
     }
+}
+
+.hoverClassX:hover {
+    cursor: pointer;
+    background-image: url(./assets/icon-x-outline.svg);
+    background-repeat: no-repeat;
+    background-position: 15px 13px;
+}
+
+.hoverClassO:hover {
+    cursor: pointer;
+    background-image: url(./assets/icon-o-outline.svg);
+    background-repeat: no-repeat;
+    background-position: 15px 13px;
+}
+
+@media (min-width: 35em) {
+    .hoverClassX:hover {
+    background-position: center;
+    }
+
+    .hoverClassO:hover {
+        background-position: center;
+        }
 }
 
 .scores {
@@ -574,3 +601,4 @@ select {
 .modal {
     display: none;
 }
+
