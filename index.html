@@ -17,21 +17,18 @@
 <body>
     <main class="main">
 
-        <section class="gameMenu">
-
+        <section id="gameMenu" class="gameMenu">
             <img src="./assets/logo.svg" alt="logo">
-
             <div class="choose-mark flex">
                 <h1 class="fs-600 uppercase">Pick player 1's mark</h1>
                 <div class="mark-container flex">
                     <label class="labels" for="X-mark">
-                        <input  class="radio" type="radio" id="X-mark" name="marks" value="X" checked="true">
+                        <input class="radio" type="radio" id="X-mark" name="marks" value="X" checked="true">
                             <span class="checkmark">
                                 <svg class="Xsvg" width="64" height="64" xmlns="http://www.w3.org/2000/svg"><path class="XsvgPath" d="M15.002 1.147 32 18.145 48.998 1.147a3 3 0 0 1 4.243 0l9.612 9.612a3 3 0 0 1 0 4.243L45.855 32l16.998 16.998a3 3 0 0 1 0 4.243l-9.612 9.612a3 3 0 0 1-4.243 0L32 45.855 15.002 62.853a3 3 0 0 1-4.243 0L1.147 53.24a3 3 0 0 1 0-4.243L18.145 32 1.147 15.002a3 3 0 0 1 0-4.243l9.612-9.612a3 3 0 0 1 4.243 0Z" fill="hsl( var(--clr-silver) )"/>
                                 </svg>
                             </span>
                     </label>
-
                     <label class="labels" for="O-mark">
                         <input class="radio" type="radio" id="O-mark" name="marks" value="O">
                             <span class="checkmark">
@@ -39,45 +36,64 @@
                                 </svg>
                             </span>
                         </label>
-
-
                 </div>
                 <p class="fs-500 uppercase text-silver">Remember: X goes first</p>
-
             </div>
-
-            <button class="fs-700 text-dark uppercase d-block cpuBtn">New Game (vs CPU)</button>
-            <button class="fs-700 text-dark uppercase d-block playerBtn">New Game (vs player)</button>
-
+            <button class="fs-700 text-dark uppercase d-block cpuBtn" onclick="newGameCPU()">New Game (vs CPU)</button>
+            <button class="fs-700 text-dark uppercase d-block playerBtn" onclick="newGamePlayer()">New Game (vs player)</button>
         </section>
 
-        <section class="gameBoard">
+        <section id="gameBoard" class="gameBoard">
 
-            <!-- Game board start -->
+            <div class="game-board-header flex">
+                <img class="game-board-header-logo" src="./assets/logo.svg" alt="logo">
+                <div class="turn">
+                    <img class="Xturn" src="./assets/icon-x-turn.svg" alt="X icon">
+                    <p class="fs-500 uppercase">turn</p>
+                </div>
+                <button class="restart" onclick="restartGame()"><img src="./assets/icon-restart.svg" alt="restart icon"></button>
+            </div>
+            <div class="boxes">
+                <div class="box square1"></div>
+                <div class="box square2"></div>
+                <div class="box square3"></div>
+                <div class="box square4"></div>
+                <div class="box square5"></div>
+                <div class="box square6"></div>
+                <div class="box square7"></div>
+                <div class="box square8"></div>
+                <div class="box square9"></div>
+            </div>
 
-            <!-- x/o icon --> turn
+            <div class="scores fs-500 uppercase text-dark">
+                <div class="box-score your-score">
+                    <p>X (You)<br><span class="fs-800">0</span></p>
+                </div>   
+                <div class="box-score ties">
+                    <p>Ties<br><span class="fs-800">0</span></p>
+                </div>
+                <div class="box-score cpu-score">    
+                    <p>O (CPU)<br><span class="fs-800">0</span></p>
+                </div>
+            </div>
 
-            X (You)
-            <!-- Your score -->
-            Ties
-            <!-- Ties score -->
-            X (CPU)
-            <!-- CPU score -->
+            <div class="modal">
 
-            Oh no, you lost
-            You won!
-            Player
-            <!-- 1/2 --> wins!
-
-            <!-- x/o icon --> takes the round
-            Round tied
-            Restart game?
-
-            Quit
-            Next round
-            No, cancel
-            Yes, restart
-
+                Oh no, you lost
+                You won!
+                Player
+                <!-- 1/2 --> wins!
+                
+                <!-- x/o icon --> takes the round
+                Round tied
+                Restart game?
+                
+                Quit
+                Next round
+                No, cancel
+                Yes, restart
+            </div>
+                
         </section>
 
     </main>
