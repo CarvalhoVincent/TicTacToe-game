@@ -5,17 +5,28 @@ var O_pattern = [];
 const winnerMark = document.getElementById("winner-mark");
 var turn = document.getElementById('turn');
 var allBox = document.getElementsByClassName("box");
-
+const player1Name = document.getElementById("player1Name");
+const player2Name = document.getElementById("player2Name");
+const cpuBtn = document.getElementById("cpuBtn");
+const playerBtn = document.getElementById("playerBtn");
 
 
 function newGameCPU() {
     gameBoard.style.display = "initial";
     gameMenu.style.display = "none";
+    player1Name.innerHTML = "X (You)";
+    player2Name.innerHTML = "0 (CPU)";
+    cpuBtn.setAttribute("data-value", "active");
+    playerBtn.setAttribute("data-value", "")
 }
 
 function newGamePlayer() {
     gameBoard.style.display = "initial";
     gameMenu.style.display = "none";
+    player1Name.innerHTML = "X (P1)";
+    player2Name.innerHTML = "0 (P2)";
+    playerBtn.setAttribute("data-value", "active")
+    cpuBtn.setAttribute("data-value", "")
 }
 
 function restartGame() {
@@ -65,17 +76,7 @@ function hitBox(box) {
         }
         checkWin(O_pattern);
     }
-
-    // for (all of allBox) {
-    //     if (all.getAttribute("data-value") === "") {
-    //     all.classList.remove("hoverClassO");
-    //     all.classList.remove("hoverClassX");
-    //     all.setAttribute("onclick", "");
-    //     draw();
-    //     }
-    // }
 };
-
 
 function checkWin(currentPlayer) {
     const win_pattern = [
@@ -90,10 +91,10 @@ function checkWin(currentPlayer) {
     ];
 
     for (some of win_pattern) {
-
+        var isThereWinner = false;
         const isContainedIn = (a, b) => {
             for (const v of new Set(a)) {
-              if (!b.some(e => e === v))
+              if (!b.some(e => e === v)) 
                 return false;
             }
             for (empty of allBox) {
@@ -103,14 +104,23 @@ function checkWin(currentPlayer) {
                     empty.setAttribute("onclick", "");
                 }
             }
+            isThereWinner = true;
             results();
             return true;
-          };
-          isContainedIn(some, currentPlayer )
-    }
+        };
+        isContainedIn(some, currentPlayer );
+        }
+        console.log(isThereWinner);
+
+        if (isThereWinner === false && X_pattern.length === 5 && O_pattern.length === 4) {
+            for (all of allBox) {
+            all.classList.remove("hoverClassO");
+            all.classList.remove("hoverClassX");
+            all.setAttribute("onclick", "");
+            }
+            draw();
+        }
 };
-
-
 
 //      Modal      //
 
@@ -122,19 +132,65 @@ const winnerName = document.getElementById("winnerName");
 const Xscore = document.getElementById("Xscore");
 const drawScore = document.getElementById("draw");
 const Oscore = document.getElementById("Oscore");
+const XradioBtn = document.getElementById("X-mark");
+const OradioBtn = document.getElementById("O-mark");
 
 
 function results() {
+
     modal.style.display = "initial";
     endGame.style.display = "flex";
     restartingGame.style.display = "none";
+
     if (turn.getAttribute("data-value") === "O") {
+
+        winnerName.style.display = "initial";
+
+        if (playerBtn.getAttribute("data-value") === "active") {
+            if (XradioBtn.checked === true) {
+                winnerName.innerHTML = "Player 1 wins!";
+            } 
+            if (OradioBtn.checked === true) {
+                winnerName.innerHTML = "Player 1 wins!"; 
+            }
+        } 
+        if (cpuBtn.getAttribute("data-value") === "active") {
+            if (XradioBtn.checked === true) {
+                winnerName.innerHTML = "You won!";
+            } 
+            if (OradioBtn.checked === true) {
+                winnerName.innerHTML = "Oh no, you lost..."; 
+            }
+        }
+
         winnerMark.src = "./assets/icon-x.svg";
+        winnerMark.style.display = "initial";
         winnerTakes.style = "color: hsl( var(--clr-lightBlue) );";
+        winnerTakes.innerHTML = "takes the round";
         Xscore.innerHTML++;
+
     } else {
+        winnerName.style.display = "initial";
+        if (playerBtn.getAttribute("data-value") === "active") {
+            if (OradioBtn.checked === true) {
+                winnerName.innerHTML = "Player 2 wins!";
+            } 
+            if (XradioBtn.checked === true) {
+                winnerName.innerHTML = "Player 2 wins!"; 
+            }
+        } 
+        if (cpuBtn.getAttribute("data-value") === "active") {
+            if (OradioBtn.checked === true) {
+                winnerName.innerHTML = "You won!";
+            } 
+            if (XradioBtn.checked === true) {
+                winnerName.innerHTML = "Oh no, you lost..."; 
+            }
+        }
         winnerMark.src = "./assets/icon-o.svg";
+        winnerMark.style.display = "initial";
         winnerTakes.style = "color: hsl( var(--clr-orange) );";
+        winnerTakes.innerHTML = "takes the round";
         Oscore.innerHTML++;
     }
 }

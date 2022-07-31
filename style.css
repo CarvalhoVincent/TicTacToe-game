@@ -46,16 +46,12 @@
 /* Reset               */
 /* ------------------- */
 
-/* https://piccalil.li/blog/a-modern-css-reset/ */
-
-/* Box sizing */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
 
-/* Reset margins */
 body,
 h1,
 h2,
@@ -78,7 +74,6 @@ p {
     font-weight: 400;
 }
 
-/* set up the body */
 body {
     font-family: 'Outfit', sans-serif;
     color: hsl( var(--clr-silver) );
@@ -91,14 +86,12 @@ body {
     overflow-x: hidden;
 }
 
-/* make images easier to work with */
 img,
 picture {
     max-width: 100%;
     display: block;
 }
 
-/* make form elements easier to work with */
 input,
 button,
 textarea,
@@ -526,8 +519,8 @@ select {
 }
 
 .animation {
-    transform: rotate3d(.2, .5, .3, 360deg);
-    transition: transform 1.1s ease-in-out;
+    transform: rotateY(180deg);
+    transition: transform 1.1s ease;
 }
 
 .hoverClassX:hover {
@@ -551,7 +544,7 @@ select {
 
     .hoverClassO:hover {
         background-position: center;
-        }
+    }
 }
 
 .scores {
