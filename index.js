@@ -9,6 +9,52 @@ const player1Name = document.getElementById("player1Name");
 const player2Name = document.getElementById("player2Name");
 const cpuBtn = document.getElementById("cpuBtn");
 const playerBtn = document.getElementById("playerBtn");
+const XradioBtn = document.getElementById("X-mark");
+const OradioBtn = document.getElementById("O-mark");
+
+
+
+    
+
+
+
+async function cpuTurn() {
+
+
+    if (XradioBtn.checked === true) {
+         
+        const promise = new Promise ((resolve) => {
+
+            if (turn.getAttribute("data-value") === "O") {
+            resolve();
+            }
+        });
+
+        await promise;
+        
+        
+        cpuThink();
+    };
+};
+
+
+function getRandom(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min +1)) + min;
+}
+
+function cpuThink() {
+
+    var cpuTry = getRandom(0, 8);
+    var choosenBox = document.getElementById("box" + cpuTry);
+    if (choosenBox.getAttribute("data-value") === "") {
+        hitBox("box" + cpuTry);
+    } else {
+        cpuThink();
+    }
+}
+
 
 
 function newGameCPU() {
@@ -17,7 +63,9 @@ function newGameCPU() {
     player1Name.innerHTML = "X (You)";
     player2Name.innerHTML = "0 (CPU)";
     cpuBtn.setAttribute("data-value", "active");
-    playerBtn.setAttribute("data-value", "")
+    playerBtn.setAttribute("data-value", "");
+
+    cpuTurn(); 
 }
 
 function newGamePlayer() {
@@ -76,6 +124,10 @@ function hitBox(box) {
         }
         checkWin(O_pattern);
     }
+
+    if (cpuBtn.getAttribute("data-value") === "active") {
+        cpuTurn();
+    }
 };
 
 function checkWin(currentPlayer) {
@@ -132,8 +184,6 @@ const winnerName = document.getElementById("winnerName");
 const Xscore = document.getElementById("Xscore");
 const drawScore = document.getElementById("draw");
 const Oscore = document.getElementById("Oscore");
-const XradioBtn = document.getElementById("X-mark");
-const OradioBtn = document.getElementById("O-mark");
 
 
 function results() {

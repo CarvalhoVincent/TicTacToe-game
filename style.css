@@ -389,6 +389,7 @@ select {
 
 .gameBoard {
     display: none;
+    z-index: -1;
 }
 
 .game-board-header {
@@ -519,8 +520,8 @@ select {
 }
 
 .animation {
-    transform: rotateY(180deg);
-    transition: transform 1.1s ease;
+    transform: rotateZ(360deg);
+    transition: transform 1.5s ease-out;
 }
 
 .hoverClassX:hover {
@@ -603,6 +604,19 @@ select {
     background-color: hsl( var(--clr-navy) );
     text-align: center;
     padding-top: 2.5rem;
+    z-index: 1000;
+}
+
+@media (min-width: 35em) {
+    .modal {
+        top: 23.6875rem;
+    }
+}
+
+@media (min-width: 35em) {
+    .modal {
+        top: 20.625rem;
+    }
 }
 
 .endGameModal {
