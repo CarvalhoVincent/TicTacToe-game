@@ -11,62 +11,26 @@ const cpuBtn = document.getElementById("cpuBtn");
 const playerBtn = document.getElementById("playerBtn");
 const XradioBtn = document.getElementById("X-mark");
 const OradioBtn = document.getElementById("O-mark");
-
-
-
-    
-
-
-
-async function cpuTurn() {
-
-
-    if (XradioBtn.checked === true) {
-         
-        const promise = new Promise ((resolve) => {
-
-            if (turn.getAttribute("data-value") === "O") {
-            resolve();
-            }
-        });
-
-        await promise;
-        
-        
-        cpuThink();
-    };
-};
-
-
-function getRandom(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min +1)) + min;
-}
-
-function cpuThink() {
-
-    var cpuTry = getRandom(0, 8);
-    var choosenBox = document.getElementById("box" + cpuTry);
-    if (choosenBox.getAttribute("data-value") === "") {
-        hitBox("box" + cpuTry);
-    } else {
-        cpuThink();
-    }
-}
-
+const cpuThinkMessage = document.getElementById("cpuThink");
+const winnerX = false;
+const winnerO = false;
 
 
 function newGameCPU() {
     gameBoard.style.display = "initial";
     gameMenu.style.display = "none";
+    if (XradioBtn.checked === true) {
     player1Name.innerHTML = "X (You)";
     player2Name.innerHTML = "0 (CPU)";
+    } else {
+    player1Name.innerHTML = "X (CPU)";
+    player2Name.innerHTML = "0 (You)";
+    }
     cpuBtn.setAttribute("data-value", "active");
     playerBtn.setAttribute("data-value", "");
 
     cpuTurn(); 
-}
+};
 
 function newGamePlayer() {
     gameBoard.style.display = "initial";
@@ -75,11 +39,11 @@ function newGamePlayer() {
     player2Name.innerHTML = "0 (P2)";
     playerBtn.setAttribute("data-value", "active")
     cpuBtn.setAttribute("data-value", "")
-}
+};
 
 function restartGame() {
     window.location.reload();
-}
+};
 
 function hitBox(box) {
     var boxChoice = document.getElementById(box);
@@ -130,6 +94,8 @@ function hitBox(box) {
     }
 };
 
+var isThereWinner = false;
+
 function checkWin(currentPlayer) {
     const win_pattern = [
         ["box0", "box1", "box2"],
@@ -139,11 +105,10 @@ function checkWin(currentPlayer) {
         ["box1", "box4", "box7"],
         ["box2", "box5", "box8"],
         ["box0", "box4", "box8"],
-        ["box2", "box4", "box6"]
+        ["box2", "box4", "box6"],
     ];
 
     for (some of win_pattern) {
-        var isThereWinner = false;
         const isContainedIn = (a, b) => {
             for (const v of new Set(a)) {
               if (!b.some(e => e === v)) 
@@ -159,20 +124,74 @@ function checkWin(currentPlayer) {
             isThereWinner = true;
             results();
             return true;
-        };
-        isContainedIn(some, currentPlayer );
         }
-        console.log(isThereWinner);
-
-        if (isThereWinner === false && X_pattern.length === 5 && O_pattern.length === 4) {
-            for (all of allBox) {
+        isContainedIn(some, currentPlayer);
+    }
+    
+    if (isThereWinner === false && X_pattern.length === 5 && O_pattern.length === 4) {
+        for (all of allBox) {
             all.classList.remove("hoverClassO");
             all.classList.remove("hoverClassX");
             all.setAttribute("onclick", "");
-            }
-            draw();
         }
+        draw();
+    }
 };
+async function cpuTurn() {
+
+    if (XradioBtn.checked === true) {
+        const promise = new Promise ((resolve,reject) => {
+            if (turn.getAttribute("data-value") === "O") {
+            resolve();
+            }
+            if (winnerX === true) {
+            reject();
+            } 
+        });
+        await promise;
+        
+        setTimeout(cpuPlay, 1000);
+        cpuThink();
+    };
+
+    if (OradioBtn.checked === true) {
+        const promise = new Promise ((resolve) => {
+            if (turn.getAttribute("data-value") === "X") {
+            resolve();
+            }
+            if (winnerO === true) {
+                reject();
+                } 
+        });
+        await promise;
+        
+        setTimeout(cpuPlay, 2000);
+        cpuThink();
+    };
+};
+
+function getRandom(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min +1)) + min;
+}
+
+function cpuThink() {
+    cpuThinkMessage.style.display = "initial";
+}
+
+function cpuPlay() {
+    cpuThinkMessage.style.display = "none";
+    var cpuTry = getRandom(0, 8);
+    var choosenBox = document.getElementById("box" + cpuTry);
+    if (choosenBox.getAttribute("data-value") === "") {
+        hitBox("box" + cpuTry);
+    } else {
+        cpuPlay();
+    }
+}
+
+
 
 //      Modal      //
 
@@ -186,8 +205,8 @@ const drawScore = document.getElementById("draw");
 const Oscore = document.getElementById("Oscore");
 
 
-function results() {
 
+function results() {
     modal.style.display = "initial";
     endGame.style.display = "flex";
     restartingGame.style.display = "none";
@@ -218,6 +237,7 @@ function results() {
         winnerTakes.style = "color: hsl( var(--clr-lightBlue) );";
         winnerTakes.innerHTML = "takes the round";
         Xscore.innerHTML++;
+        winnerX = true;
 
     } else {
         winnerName.style.display = "initial";
@@ -242,6 +262,7 @@ function results() {
         winnerTakes.style = "color: hsl( var(--clr-orange) );";
         winnerTakes.innerHTML = "takes the round";
         Oscore.innerHTML++;
+        winnerO = true;
     }
 }
 

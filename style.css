@@ -521,7 +521,7 @@ select {
 
 .animation {
     transform: rotateZ(360deg);
-    transition: transform 1.5s ease-out;
+    transition: transform 1s ease-out;
 }
 
 .hoverClassX:hover {
@@ -617,6 +617,13 @@ select {
     .modal {
         top: 20.625rem;
     }
+}
+
+.cpuThink {
+    display: none;
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 2rem;
 }
 
 .endGameModal {
