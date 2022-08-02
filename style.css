@@ -519,11 +519,6 @@ select {
     }
 }
 
-.animation {
-    transform: rotateZ(360deg);
-    transition: transform 1s ease-out;
-}
-
 .hoverClassX:hover {
     cursor: pointer;
     background-image: url(./assets/icon-x-outline.svg);

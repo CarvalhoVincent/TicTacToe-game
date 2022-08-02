@@ -14,7 +14,15 @@ const OradioBtn = document.getElementById("O-mark");
 const cpuThinkMessage = document.getElementById("cpuThink");
 const winnerX = false;
 const winnerO = false;
-
+const box0 = document.getElementById("box0");
+const box1 = document.getElementById("box1");
+const box2 = document.getElementById("box2");
+const box3 = document.getElementById("box3");
+const box4 = document.getElementById("box4");
+const box5 = document.getElementById("box5");
+const box6 = document.getElementById("box6");
+const box7 = document.getElementById("box7");
+const box8 = document.getElementById("box8");
 
 function newGameCPU() {
     gameBoard.style.display = "initial";
@@ -52,7 +60,6 @@ function hitBox(box) {
     if (turn.getAttribute("data-value") === "X") {
         img.src = "./assets/icon-x.svg";
         img.setAttribute("class", "boxPlayed");
-        boxChoice.classList.add("animation");
         boxChoice.appendChild(img);
         boxChoice.classList.remove("hoverClassX");
         boxChoice.setAttribute("data-value", "X");
@@ -71,7 +78,6 @@ function hitBox(box) {
     } else {
         img.src = "./assets/icon-o.svg";
         img.setAttribute("class", "boxPlayed");
-        boxChoice.classList.add("animation");
         boxChoice.appendChild(img);
         boxChoice.classList.remove("hoverClassO");
         boxChoice.setAttribute("data-value", "O");
@@ -137,11 +143,22 @@ function checkWin(currentPlayer) {
         draw();
     }
 };
+
 async function cpuTurn() {
+
 
     if (XradioBtn.checked === true) {
         const promise = new Promise ((resolve,reject) => {
             if (turn.getAttribute("data-value") === "O") {
+                box0.setAttribute("onclick", "");
+                box1.setAttribute("onclick", "");
+                box2.setAttribute("onclick", "");
+                box3.setAttribute("onclick", "");
+                box4.setAttribute("onclick", "");
+                box5.setAttribute("onclick", "");
+                box6.setAttribute("onclick", "");
+                box7.setAttribute("onclick", "");
+                box8.setAttribute("onclick", "");
             resolve();
             }
             if (winnerX === true) {
@@ -149,14 +166,23 @@ async function cpuTurn() {
             } 
         });
         await promise;
-        
-        setTimeout(cpuPlay, 1000);
+
+        setTimeout(cpuPlay, 3000);
         cpuThink();
     };
 
     if (OradioBtn.checked === true) {
         const promise = new Promise ((resolve) => {
             if (turn.getAttribute("data-value") === "X") {
+                box0.setAttribute("onclick", "");
+                box1.setAttribute("onclick", "");
+                box2.setAttribute("onclick", "");
+                box3.setAttribute("onclick", "");
+                box4.setAttribute("onclick", "");
+                box5.setAttribute("onclick", "");
+                box6.setAttribute("onclick", "");
+                box7.setAttribute("onclick", "");
+                box8.setAttribute("onclick", "");
             resolve();
             }
             if (winnerO === true) {
@@ -164,8 +190,7 @@ async function cpuTurn() {
                 } 
         });
         await promise;
-        
-        setTimeout(cpuPlay, 2000);
+        setTimeout(cpuPlay, 3000);
         cpuThink();
     };
 };
@@ -176,22 +201,43 @@ function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min +1)) + min;
 }
 
+function printLetterByLetter(destination, message, speed){
+    var i = 0;
+    var interval = setInterval(function(){
+        document.getElementById(destination).innerHTML += message.charAt(i);
+        i++;
+        if (i > message.length){
+            clearInterval(interval);
+        }
+    }, speed);
+    document.getElementById(destination).innerHTML = "";
+}
+
 function cpuThink() {
     cpuThinkMessage.style.display = "initial";
+    printLetterByLetter("cpuThinkMessage", "CPU think...", 150);
 }
 
 function cpuPlay() {
     cpuThinkMessage.style.display = "none";
     var cpuTry = getRandom(0, 8);
     var choosenBox = document.getElementById("box" + cpuTry);
+
     if (choosenBox.getAttribute("data-value") === "") {
         hitBox("box" + cpuTry);
+        box0.setAttribute("onclick", "hitBox('box0')");
+        box1.setAttribute("onclick", "hitBox('box1')");
+        box2.setAttribute("onclick", "hitBox('box2')");
+        box3.setAttribute("onclick", "hitBox('box3')");
+        box4.setAttribute("onclick", "hitBox('box4')");
+        box5.setAttribute("onclick", "hitBox('box5')");
+        box6.setAttribute("onclick", "hitBox('box6')");
+        box7.setAttribute("onclick", "hitBox('box7')");
+        box8.setAttribute("onclick", "hitBox('box8')");
     } else {
         cpuPlay();
     }
 }
-
-
 
 //      Modal      //
 
@@ -279,15 +325,6 @@ function draw() {
 
 function nextRound() {
     var boxPlayed = document.querySelectorAll(".boxPlayed");
-    const box0 = document.getElementById("box0");
-    const box1 = document.getElementById("box1");
-    const box2 = document.getElementById("box2");
-    const box3 = document.getElementById("box3");
-    const box4 = document.getElementById("box4");
-    const box5 = document.getElementById("box5");
-    const box6 = document.getElementById("box6");
-    const box7 = document.getElementById("box7");
-    const box8 = document.getElementById("box8");
 
     modal.style.display = "none";
     endGame.style.display = "none";
@@ -299,7 +336,6 @@ function nextRound() {
     for (all of allBox) {
         all.setAttribute("data-value", "");
         all.classList.add("hoverClassX");
-        all.classList.remove("animation");
     }
     turn.setAttribute("data-value", "X");
     turn.src = "./assets/icon-x-turn.svg";
@@ -314,6 +350,7 @@ function nextRound() {
     box8.setAttribute("onclick", "hitBox('box8')");
     X_pattern = [];
     O_pattern = [];
+    cpuTurn(); 
 }
 
 function displayModalRestart() {
