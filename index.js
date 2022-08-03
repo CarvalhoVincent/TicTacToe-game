@@ -14,25 +14,45 @@ const OradioBtn = document.getElementById("O-mark");
 const cpuThinkMessage = document.getElementById("cpuThink");
 const winnerX = false;
 const winnerO = false;
-const box0 = document.getElementById("box0");
-const box1 = document.getElementById("box1");
-const box2 = document.getElementById("box2");
-const box3 = document.getElementById("box3");
-const box4 = document.getElementById("box4");
-const box5 = document.getElementById("box5");
-const box6 = document.getElementById("box6");
-const box7 = document.getElementById("box7");
-const box8 = document.getElementById("box8");
+const box0 = document.getElementById("0");
+const box1 = document.getElementById("1");
+const box2 = document.getElementById("2");
+const box3 = document.getElementById("3");
+const box4 = document.getElementById("4");
+const box5 = document.getElementById("5");
+const box6 = document.getElementById("6");
+const box7 = document.getElementById("7");
+const box8 = document.getElementById("8");
+
+var origBoard = Array.from(Array(9).keys());
+var huPlayer;
+var aiPlayer;
+
+const win_pattern = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+];
 
 function newGameCPU() {
+
     gameBoard.style.display = "initial";
     gameMenu.style.display = "none";
     if (XradioBtn.checked === true) {
-    player1Name.innerHTML = "X (You)";
-    player2Name.innerHTML = "0 (CPU)";
+        huPlayer = 'X';
+        aiPlayer = 'O';
+        player1Name.innerHTML = "X (You)";
+        player2Name.innerHTML = "0 (CPU)";
     } else {
-    player1Name.innerHTML = "X (CPU)";
-    player2Name.innerHTML = "0 (You)";
+        huPlayer = 'O';
+        aiPlayer = 'X';
+        player1Name.innerHTML = "X (CPU)";
+        player2Name.innerHTML = "0 (You)";
     }
     cpuBtn.setAttribute("data-value", "active");
     playerBtn.setAttribute("data-value", "");
@@ -66,8 +86,14 @@ function hitBox(box) {
         boxChoice.setAttribute("onclick", "");
         turn.setAttribute("data-value", "O");
         turn.src = "./assets/icon-o-turn.svg";
-        X_pattern.push(boxChoice.id);
+        X_pattern.push(parseInt(boxChoice.id, 10));
         X_pattern.sort();
+        if (XradioBtn.checked === true) {
+            origBoard.splice(parseInt(boxChoice.id, 10), 1, (parseInt(boxChoice.id, 10), huPlayer));
+        } else {
+            origBoard.splice(parseInt(boxChoice.id, 10), 1, (parseInt(boxChoice.id, 10), aiPlayer));
+
+        }
         for (empty of allBox) {
             if (empty.getAttribute("data-value") === "") {
             empty.classList.add("hoverClassO");
@@ -84,8 +110,14 @@ function hitBox(box) {
         boxChoice.setAttribute("onclick", "");
         turn.setAttribute("data-value", "X");
         turn.src = "./assets/icon-x-turn.svg";
-        O_pattern.push(boxChoice.id);
+        O_pattern.push(parseInt(boxChoice.id, 10));
         O_pattern.sort();
+        if (OradioBtn.checked === true) {
+            origBoard.splice(parseInt(boxChoice.id, 10), 1, (parseInt(boxChoice.id, 10), huPlayer));
+        } else {
+            origBoard.splice(parseInt(boxChoice.id, 10), 1, (parseInt(boxChoice.id, 10), aiPlayer));
+
+        }
         for (empty of allBox) {
             if (empty.getAttribute("data-value") === "") {
             empty.classList.add("hoverClassX");
@@ -103,18 +135,8 @@ function hitBox(box) {
 var isThereWinner = false;
 
 function checkWin(currentPlayer) {
-    const win_pattern = [
-        ["box0", "box1", "box2"],
-        ["box3", "box4", "box5"],
-        ["box6", "box7", "box8"],
-        ["box0", "box3", "box6"],
-        ["box1", "box4", "box7"],
-        ["box2", "box5", "box8"],
-        ["box0", "box4", "box8"],
-        ["box2", "box4", "box6"],
-    ];
 
-    for (some of win_pattern) {
+        for (some of win_pattern) {
         const isContainedIn = (a, b) => {
             for (const v of new Set(a)) {
               if (!b.some(e => e === v)) 
@@ -190,16 +212,11 @@ async function cpuTurn() {
                 } 
         });
         await promise;
-        setTimeout(cpuPlay, 3000);
+        setTimeout(cpuPlay, 2500);
         cpuThink();
     };
 };
 
-function getRandom(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min +1)) + min;
-}
 
 function printLetterByLetter(destination, message, speed){
     var i = 0;
@@ -215,28 +232,29 @@ function printLetterByLetter(destination, message, speed){
 
 function cpuThink() {
     cpuThinkMessage.style.display = "initial";
-    printLetterByLetter("cpuThinkMessage", "CPU think...", 150);
+    printLetterByLetter("cpuThinkMessage", "CPU think...", 150);    
+}
+
+function bestSpot() {
+	return minimax(origBoard, aiPlayer).index;
 }
 
 function cpuPlay() {
     cpuThinkMessage.style.display = "none";
-    var cpuTry = getRandom(0, 8);
-    var choosenBox = document.getElementById("box" + cpuTry);
+    hitBox(bestSpot());
 
-    if (choosenBox.getAttribute("data-value") === "") {
-        hitBox("box" + cpuTry);
-        box0.setAttribute("onclick", "hitBox('box0')");
-        box1.setAttribute("onclick", "hitBox('box1')");
-        box2.setAttribute("onclick", "hitBox('box2')");
-        box3.setAttribute("onclick", "hitBox('box3')");
-        box4.setAttribute("onclick", "hitBox('box4')");
-        box5.setAttribute("onclick", "hitBox('box5')");
-        box6.setAttribute("onclick", "hitBox('box6')");
-        box7.setAttribute("onclick", "hitBox('box7')");
-        box8.setAttribute("onclick", "hitBox('box8')");
-    } else {
-        cpuPlay();
-    }
+    // console.log(origBoard);
+    // console.log(minimax(origBoard, aiPlayer).index);
+
+        box0.setAttribute("onclick", "hitBox('0')");
+        box1.setAttribute("onclick", "hitBox('1')");
+        box2.setAttribute("onclick", "hitBox('2')");
+        box3.setAttribute("onclick", "hitBox('3')");
+        box4.setAttribute("onclick", "hitBox('4')");
+        box5.setAttribute("onclick", "hitBox('5')");
+        box6.setAttribute("onclick", "hitBox('6')");
+        box7.setAttribute("onclick", "hitBox('7')");
+        box8.setAttribute("onclick", "hitBox('8')");
 }
 
 //      Modal      //
@@ -339,17 +357,18 @@ function nextRound() {
     }
     turn.setAttribute("data-value", "X");
     turn.src = "./assets/icon-x-turn.svg";
-    box0.setAttribute("onclick", "hitBox('box0')");
-    box1.setAttribute("onclick", "hitBox('box1')");
-    box2.setAttribute("onclick", "hitBox('box2')");
-    box3.setAttribute("onclick", "hitBox('box3')");
-    box4.setAttribute("onclick", "hitBox('box4')");
-    box5.setAttribute("onclick", "hitBox('box5')");
-    box6.setAttribute("onclick", "hitBox('box6')");
-    box7.setAttribute("onclick", "hitBox('box7')");
-    box8.setAttribute("onclick", "hitBox('box8')");
+    box0.setAttribute("onclick", "hitBox('0')");
+    box1.setAttribute("onclick", "hitBox('1')");
+    box2.setAttribute("onclick", "hitBox('2')");
+    box3.setAttribute("onclick", "hitBox('3')");
+    box4.setAttribute("onclick", "hitBox('4')");
+    box5.setAttribute("onclick", "hitBox('5')");
+    box6.setAttribute("onclick", "hitBox('6')");
+    box7.setAttribute("onclick", "hitBox('7')");
+    box8.setAttribute("onclick", "hitBox('8')");
     X_pattern = [];
     O_pattern = [];
+    origBoard = Array.from(Array(9).keys());
     cpuTurn(); 
 }
 
@@ -364,3 +383,78 @@ function cancelReset() {
     checkWin(O_pattern);
     checkWin(X_pattern);
 };
+
+
+
+//    MiniMax    //
+
+
+
+function emptySquares() {
+	return origBoard.filter(s => typeof s == 'number');
+}
+
+function checkWinner(board, player) {
+	let plays = board.reduce((a, e, i) =>
+		(e === player) ? a.concat(i) : a, []);
+	let gameWon = null;
+	for (let [index, win] of win_pattern.entries()) {
+		if (win.every(elem => plays.indexOf(elem) > -1)) {
+			gameWon = {index: index, player: player};
+			break;
+		}
+	}
+	return gameWon;
+}
+
+function minimax(newBoard, player) {
+
+	var availSpots = emptySquares();
+
+	if (checkWinner(newBoard, huPlayer)) {
+		return {score: -10};
+	} else if (checkWinner(newBoard, aiPlayer)) {
+		return {score: 10};
+	} else if (availSpots.length === 0) {
+		return {score: 0};
+	}
+	var moves = [];
+	for (var i = 0; i < availSpots.length; i++) {
+		var move = {};
+		move.index = newBoard[availSpots[i]];
+		newBoard[availSpots[i]] = player;
+
+		if (player == aiPlayer) {
+			var result = minimax(newBoard, huPlayer);
+			move.score = result.score;
+		} else {
+			var result = minimax(newBoard, aiPlayer);
+			move.score = result.score;
+		}
+
+		newBoard[availSpots[i]] = move.index;
+
+		moves.push(move);
+	}
+
+	var bestMove;
+	if(player === aiPlayer) {
+		var bestScore = -10000;
+		for(var i = 0; i < moves.length; i++) {
+			if (moves[i].score > bestScore) {
+				bestScore = moves[i].score;
+				bestMove = i;
+			}
+		}
+	} else {
+		var bestScore = 10000;
+		for(var i = 0; i < moves.length; i++) {
+			if (moves[i].score < bestScore) {
+				bestScore = moves[i].score;
+				bestMove = i;
+			}
+		}
+	}
+
+	return moves[bestMove];
+}
